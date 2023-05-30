@@ -1,4 +1,4 @@
-www.cloudflare.com(https://www.cloudflare.com) 
+感谢提供加速服务 www.cloudflare.com
 
 ### 修复腾讯云 DNS 无法调用 --update 2023.1.3
 
