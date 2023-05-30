@@ -27,26 +27,10 @@
 
 境外：AB
 
-### Faker GFW ——update 2021.08.08
-
-最近有很多小伙伴正遭受假墙并伴随着被勒索的困扰，现在增加了预防假墙攻击的功能
-
-> 实现方式
-
-​	之前不管您使用免费的key还是付费的key所筛选出来的Cloudflare IP都是多人共享的，如果其中有人的网站刚好被假墙，而您自选出来的IP刚好和他的相同，那么您的网站也有被假墙的风险，当然我也使用了各种手动去解决这个方法，比如增加接口返回IP数、随机获取优选IP等，但最总还是不能完全杜绝这情况的发现，所以现增加了一个优选IP池，只需在您的key后面加上 **`fgfw`** ,您就会每次执行脚本都能获取到**最新的独享优选IP**，由于这需要消耗更多的服务器硬件和带宽资源，那么每次调用获取最新的独享优选IP时，您只能获取到每个运营商的**2条**优选记录，并且每次调用您将消耗更多的key调用次数，执行频率建议与您DNS服务商的最小TTL保持一直（记得把脚本中的TTL参数也修改了）。
-
-> 使用方法：
-
-1. 新用户：在您购买的KEY后面加上 **`fgfw`** ，并按照下面教程使用即可
-2. 新用户：每个运营商的**2条**优选记录，所以您需要删除目前已经存在的之前优选的A记录然后在您购买的KEY后面加上 **`fgfw`** 即可。
-
-***
 
 ### 功能介绍
 
 筛选出优质的Cloudflare IP（目前在暂不开源，以接口方式提供15分钟更新一次），并使用域名服务商提供的API解析到不同线路以达到网站加速的效果（目前只完成DNSPod和阿里云DNS，后续如果有需求将会加入其他运营商的）。
-
-**详细的使用场景请移步我的[小站](https://blog.hostmonit.com/cloudflare-select-ip-plus/)**
 
 
 ### 适用人群
@@ -59,7 +43,7 @@
 
 >  必要条件: 
 >
->  ★ Cloudflare自选IP并已接入到DNSPod或阿里云DNS，不知道怎么自选IP可以查看这个[教程](https://blog.hostmonit.com/manually-select-ip/)
+>  ★ Cloudflare自选IP并已接入到DNSPod或阿里云DNS，
 >
 >  ★ Python3、pip环境
 
@@ -77,9 +61,7 @@ pip install -r requirements.txt
 
 4. 修改脚本中域名配置信息，可配置多个域名和多个子域名，注意选择DNS服务商
 
-5. (可选)从[商店](https://shop.hostmonit.com)购买KEY，当然也可以用脚本中自带的，区别是脚本中自带的KEY是历史优选的Cloudflare IP(也可以从这个[网站](https://stock.hostmonit.com/CloudFlareYes)查到IP的信息)，而购买的KEY是15分钟内获取到的最新的Cloudflare IP。
-
-6. 运行程序，如果能够正常运行可以选择cron定时执行(建议15分钟执行一次)
+5. 运行程序，如果能够正常运行可以选择cron定时执行(建议15分钟执行一次)
 
 ```python
 python cf2dns.py
@@ -97,7 +79,7 @@ python cf2dns.py
 
    > - DOMAINS  需改域名信息，填写时注意不要有换行  例如：`{"hostmonit.com": {"@": ["CM","CU","CT"], "shop": ["CM", "CU", "CT"], "stock": ["CM","CU","CT"]},"4096.me": {"@": ["CM","CU","CT"], "vv":["CM","CU","CT"]}}`
    > - DOMAINSV6 如果需要更新AAA解析请增加此secrets，格式同DOMAINS。
-   > - KEY      API密钥，从[商店](https://shop.hostmonit.com)购买KEY，也可以使用这个KEY `o1zrmHAF` ，区别是 `o1zrmHAF` 是历史优选的Cloudflare IP(也可以从这个[网站](https://stock.hostmonit.com/CloudFlareYes)查到IP的信息)，而购买的KEY是15分钟内获取到的对各运营商速度最优的的Cloudflare IP
+   > - KEY      API密钥，使用这个KEY `o1zrmHAF` 
    > - SECRETID  第一部中从[腾讯云后台](https://console.cloud.tencent.com/cam/capi)或者[阿里云后台](https://help.aliyun.com/document_detail/53045.html?spm=a2c4g.11186623.2.11.2c6a2fbdh13O53),获取到的 `SECRETID  `
    > - SECRETKEY  第一部中从[腾讯云后台](https://console.cloud.tencent.com/cam/capi)或者[阿里云后台](https://help.aliyun.com/document_detail/53045.html?spm=a2c4g.11186623.2.11.2c6a2fbdh13O53),获取到的 `SECRETKEY`
 
